@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPtLDV Kelas X — Media Pembelajaran Interaktif</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2f5fc; --card:#ffffff; --ink:#0c1630; --mut:#5d6b84; --line:#e3e9f4;
+  --pri:#3b5bfd; --pri-d:#2743e3; --cy:#06b6d4; --teal:#0e7490; --acc:#f59e0b;
+  --ok:#16a34a; --err:#dc2626; --navy:#0d1b45; --rad:18px;
+  --sh:0 10px 30px rgba(23,43,99,.08); --sh-lg:0 18px 50px rgba(23,43,99,.14);
+  --grad:linear-gradient(135deg,#3b5bfd 0%,#06b6d4 100%);
+  --grad-warm:linear-gradient(135deg,#f59e0b,#f97316);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.6;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:-2;background:
+  radial-gradient(720px 420px at 88% -6%,rgba(6,182,212,.16),transparent 62%),
+  radial-gradient(640px 400px at -8% 108%,rgba(245,158,11,.13),transparent 60%),
+  radial-gradient(560px 380px at 55% 45%,rgba(59,91,253,.07),transparent 65%)}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;background:
+  repeating-linear-gradient(0deg,rgba(13,27,69,.045) 0 1px,transparent 1px 44px),
+  repeating-linear-gradient(90deg,rgba(13,27,69,.045) 0 1px,transparent 1px 44px);
+  -webkit-mask-image:radial-gradient(80% 70% at 50% 30%,#000 30%,transparent 100%);
+  mask-image:radial-gradient(80% 70% at 50% 30%,#000 30%,transparent 100%)}
+.hide{display:none!important}
+svg.ic{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+svg.ic.fill{fill:currentColor;stroke:none}
+h1,h2,h3,h4{line-height:1.25}
+button{font-family:inherit}
+::selection{background:var(--pri);color:#fff}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#c4cfe6;border-radius:99px;border:2px solid var(--bg)}
+::-webkit-scrollbar-thumb:hover{background:#a5b4d8}
+:focus-visible{outline:3px solid rgba(59,91,253,.45);outline-offset:2px;border-radius:8px}
+/* ---------- tombol & dasar ---------- */
+.btn{display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;border-radius:13px;padding:11px 19px;font-weight:700;font-size:14px;transition:transform .16s,box-shadow .16s,background .16s;text-decoration:none;position:relative}
+.btn:active{transform:scale(.97)}
+.btn-pri{background:var(--grad);color:#fff;box-shadow:0 8px 22px rgba(59,91,253,.35)}
+.btn-pri:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(59,91,253,.45)}
+.btn-teal{background:linear-gradient(135deg,#0e7490,#06b6d4);color:#fff;box-shadow:0 8px 22px rgba(6,182,212,.3)}
+.btn-teal:hover{transform:translateY(-2px)}
+.btn-ghost{background:#fff;color:var(--pri-d);border:1.5px solid var(--line)}
+.btn-ghost:hover{border-color:var(--pri);background:#f6f8ff;transform:translateY(-1px)}
+.btn-ok{background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;box-shadow:0 8px 22px rgba(22,163,74,.3)}
+.btn-ok:hover{transform:translateY(-2px)}
+.btn-err{background:#fee2e2;color:var(--err)}
+.btn-err:hover{background:#fecaca}
+.btn-sm{padding:8px 13px;font-size:12.5px;border-radius:10px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.card{background:var(--card);border-radius:var(--rad);box-shadow:var(--sh);padding:24px;border:1px solid var(--line);position:relative;overflow:hidden}
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(59,91,253,.1);color:var(--pri-d);font-weight:700;font-size:12px;border-radius:999px;padding:5px 13px}
+.badge.teal{background:rgba(6,182,212,.12);color:var(--teal)}
+.badge.ok{background:rgba(22,163,74,.12);color:var(--ok)}
+.badge.warn{background:rgba(245,158,11,.15);color:#b45309}
+.mut{color:var(--mut)}
+.small{font-size:13px}
+input[type=text],input[type=password],textarea,select{width:100%;border:1.5px solid var(--line);border-radius:13px;padding:11px 15px;font-family:inherit;font-size:14px;background:#fbfcff;color:var(--ink);transition:border .15s,box-shadow .15s}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 4px rgba(59,91,253,.13);background:#fff}
+textarea{min-height:88px;resize:vertical}
+label.f{font-weight:700;font-size:13.5px;display:block;margin:14px 0 6px}
+/* ---------- login ---------- */
+#loginView{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px;position:relative;background:
+  radial-gradient(1000px 560px at 82% -12%,rgba(6,182,212,.4),transparent 60%),
+  radial-gradient(760px 460px at -12% 112%,rgba(245,158,11,.28),transparent 62%),
+  radial-gradient(600px 400px at 40% 120%,rgba(139,92,246,.25),transparent 60%),
+  linear-gradient(140deg,#080f2e 0%,var(--navy) 42%,#17307f 100%)}
+#loginView:after{content:"";position:absolute;inset:0;pointer-events:none;background:
+  repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 46px),
+  repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 46px);
+  -webkit-mask-image:radial-gradient(70% 60% at 30% 40%,#000,transparent 100%);
+  mask-image:radial-gradient(70% 60% at 30% 40%,#000,transparent 100%)}
+.login-wrap{width:100%;max-width:960px;display:grid;grid-template-columns:1.12fr .88fr;gap:26px;align-items:stretch;position:relative;z-index:1}
+.hero{color:#fff;border-radius:26px;padding:40px 36px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(8px);display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.hero:before{content:"";position:absolute;inset:-40%;background:conic-gradient(from 180deg at 50% 50%,rgba(6,182,212,.16),rgba(59,91,253,.16),rgba(245,158,11,.1),rgba(6,182,212,.16));animation:spin 22s linear infinite}
+@keyframes spin{to{transform:rotate(1turn)}}
+.hero>*{position:relative}
+.hero .kicker{font-size:11.5px;letter-spacing:3px;font-weight:800;color:#7de3f4;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px}
+.hero .kicker:before{content:"";width:26px;height:2px;background:linear-gradient(90deg,#7de3f4,transparent)}
+.hero h1{font-size:31px;font-weight:800;margin:12px 0 10px;letter-spacing:-.4px}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,#7de3f4,#fcd34d);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:#d9e4f8;font-size:14.5px}
+.hero .penyusun{margin-top:20px;font-size:13px;color:#bccfef;border-top:1px solid rgba(255,255,255,.22);padding-top:14px}
+.hero .penyusun b{color:#fff}
+.fchip{position:absolute;font-size:12px;font-weight:700;color:#cfe1ff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:5px 13px;backdrop-filter:blur(4px);animation:floaty 6s ease-in-out infinite;white-space:nowrap}
+.fchip.f1{top:26px;right:26px}
+.fchip.f2{top:70px;right:118px;animation-delay:1.4s}
+.fchip.f3{top:112px;right:34px;animation-delay:2.6s}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.hero-svg{margin-top:18px;width:100%;max-height:150px}
+.hero-svg .dl{stroke-dasharray:340;stroke-dashoffset:340;animation:draw 2.4s ease forwards .4s}
+.hero-svg .dl2{animation-delay:1s}
+.hero-svg .rg{opacity:0;animation:appear .9s ease forwards 1.9s,glown 4s ease-in-out infinite 2.8s}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes appear{to{opacity:1}}
+@keyframes glown{0%,100%{opacity:1}50%{opacity:.55}}
+.login-card{background:#fff;border-radius:26px;padding:34px 30px;box-shadow:0 30px 80px rgba(0,0,0,.4);display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.login-card:before{content:"";position:absolute;top:0;left:0;right:0;height:6px;background:var(--grad)}
+.login-card h2{font-size:21px;margin-bottom:4px;letter-spacing:-.3px}
+.login-card .small{margin-bottom:12px}
+.grp-hint{margin-top:10px;min-height:26px}
+.login-foot{margin-top:18px;text-align:center}
+.linkbtn{background:none;border:none;color:var(--pri-d);font-weight:700;cursor:pointer;font-size:13px;display:inline-flex;gap:6px;align-items:center}
+.linkbtn:hover{text-decoration:underline}
+/* ---------- layout aplikasi ---------- */
+#appView{display:grid;grid-template-columns:256px 1fr;min-height:100vh}
+.side{background:linear-gradient(180deg,#0a1533 0%,var(--navy) 40%,#16307c 100%);color:#e6edfa;padding:22px 14px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh;box-shadow:8px 0 30px rgba(8,15,46,.25)}
+.side .brand{display:flex;gap:11px;align-items:center;padding:6px 10px 18px;border-bottom:1px solid rgba(255,255,255,.16);margin-bottom:14px}
+.side .brand .logo{width:42px;height:42px;border-radius:14px;background:var(--grad-warm);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:15px;flex:none;box-shadow:0 6px 18px rgba(249,115,22,.45)}
+.side .brand b{font-size:15.5px;display:block;line-height:1.2}
+.side .brand span{font-size:11px;color:#a9c1ea}
+.sideuser{display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:9px 11px;margin-bottom:12px}
+.sideuser .suava{width:36px;height:36px;border-radius:11px;background:var(--grad);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex:none}
+.sideuser .sutx{min-width:0}
+.sideuser b{font-size:12.5px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sideuser small{font-size:11px;color:#a9c1ea}
+.navitem{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:13px;color:#cfdcf5;font-weight:600;font-size:14px;cursor:pointer;border:none;background:none;width:100%;text-align:left;transition:.16s}
+.navitem:hover{background:rgba(255,255,255,.1);color:#fff;transform:translateX(2px)}
+.navitem.on{background:#fff;color:var(--navy);font-weight:800;box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.navitem .st{margin-left:auto;width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.3);transition:.2s}
+.navitem.on .st{background:#cbd5e1}
+.navitem .st.done{background:#4ade80;box-shadow:0 0 8px rgba(74,222,128,.8)}
+.navitem.on .st.done{background:var(--ok)}
+.side .sidefoot{margin-top:auto;font-size:11.5px;color:#a9c1ea;padding:12px 10px 0;border-top:1px solid rgba(255,255,255,.16)}
+.main{padding:28px 32px 70px;max-width:1080px;width:100%}
+.topbar{display:flex;align-items:center;gap:12px;margin-bottom:22px;flex-wrap:wrap}
+.topbar h2{font-size:25px;font-weight:800;letter-spacing:-.4px;position:relative;padding-bottom:8px}
+.topbar h2:after{content:"";position:absolute;left:0;bottom:0;width:52px;height:4px;border-radius:99px;background:var(--grad)}
+.topbar .spacer{flex:1}
+.page{animation:fade .32s ease}
+.page:not(.hide)>*{animation:rise .5s both}
+.page:not(.hide)>*:nth-child(2){animation-delay:.06s}
+.page:not(.hide)>*:nth-child(3){animation-delay:.12s}
+.page:not(.hide)>*:nth-child(4){animation-delay:.18s}
+.page:not(.hide)>*:nth-child(5){animation-delay:.24s}
+.page:not(.hide)>*:nth-child(6){animation-delay:.3s}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+/* ---------- beranda ---------- */
+.prog-wrap{background:#fff;border:1px solid var(--line);border-radius:var(--rad);padding:20px 24px;box-shadow:var(--sh);margin-bottom:18px;position:relative;overflow:hidden}
+.prog-wrap:before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--grad)}
+.prog-bar{height:11px;background:#e9eef7;border-radius:99px;overflow:hidden;margin-top:12px;position:relative}
+.prog-bar i{display:block;height:100%;background:var(--grad);border-radius:99px;transition:width .6s cubic-bezier(.22,1,.36,1);position:relative;overflow:hidden}
+.prog-bar i:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);transform:translateX(-100%);animation:shim 2.4s ease-in-out infinite}
+@keyframes shim{60%{transform:translateX(100%)}100%{transform:translateX(100%)}}
+.steps{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.step{display:flex;gap:13px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:15px;padding:14px 17px;cursor:pointer;transition:.18s;position:relative;overflow:hidden}
+.step:hover{border-color:rgba(59,91,253,.5);transform:translateX(4px);box-shadow:var(--sh)}
+.step .no{width:34px;height:34px;border-radius:11px;background:rgba(59,91,253,.1);color:var(--pri-d);font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px;flex:none;transition:.2s}
+.step.done .no{background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;box-shadow:0 5px 14px rgba(22,163,74,.4)}
+.step b{font-size:14.5px}
+.step .mut{font-size:12.5px}
+.step .chev{margin-left:auto;color:#b6c2d9}
+/* ---------- materi ---------- */
+.mcard{margin-bottom:18px}
+.mcard:before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--grad);opacity:.85}
+.mcard h3{font-size:17px;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.mcard h3 .tag{width:32px;height:32px;border-radius:10px;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 5px 14px rgba(59,91,253,.35)}
+.mcard ul{margin:8px 0 0 20px}
+.mcard li{margin:5px 0}
+.math{background:linear-gradient(135deg,rgba(59,91,253,.08),rgba(6,182,212,.08));border:1px dashed rgba(59,91,253,.4);border-radius:10px;padding:8px 14px;font-weight:700;color:var(--navy);display:inline-block;margin:4px 6px 4px 0;font-size:14.5px}
+.note{background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1px solid #fde68a;border-radius:13px;padding:13px 17px;font-size:13.5px;margin-top:12px}
+.note b{color:#b45309}
+/* ---------- lab ---------- */
+.tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.tab{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:10px 19px;font-weight:700;font-size:13.5px;cursor:pointer;display:flex;gap:8px;align-items:center;color:var(--mut);transition:.18s}
+.tab:hover{border-color:var(--pri);color:var(--pri-d);transform:translateY(-1px)}
+.tab.on{background:var(--grad);border-color:transparent;color:#fff;box-shadow:0 8px 22px rgba(59,91,253,.35)}
+.labpane{display:none}.labpane.on{display:block;animation:rise .35s both}
+.player{display:flex;gap:18px;align-items:center;background:linear-gradient(135deg,#0e7490 0%,#0891b2 55%,#06b6d4 100%);border-radius:var(--rad);padding:22px 24px;color:#fff;margin-bottom:16px;box-shadow:0 14px 36px rgba(8,145,178,.35);position:relative;overflow:hidden}
+.player:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 2px,transparent 2px 26px)}
+.player>*{position:relative}
+.player .pbtn{width:58px;height:58px;border-radius:50%;background:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#0891b2;flex:none;transition:.18s;box-shadow:0 8px 22px rgba(0,0,0,.25)}
+.player .pbtn:hover{transform:scale(1.08)}
+.player .pbtn svg{width:24px;height:24px}
+.vlist{display:flex;flex-direction:column;gap:10px}
+.vitem{display:flex;gap:12px;align-items:center;border:1px solid var(--line);border-radius:15px;padding:14px 16px;background:#fff;text-decoration:none;color:var(--ink);transition:.18s}
+.vitem:hover{border-color:rgba(6,182,212,.6);box-shadow:var(--sh);transform:translateY(-2px)}
+.vitem .vic{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,rgba(6,182,212,.15),rgba(14,116,144,.15));color:var(--teal);display:flex;align-items:center;justify-content:center;flex:none}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0}
+.fstep{background:#f8fafE;border:1px solid var(--line);border-radius:15px;padding:15px;transition:.18s}
+.fstep:hover{transform:translateY(-3px);box-shadow:var(--sh);border-color:rgba(59,91,253,.35)}
+.fstep .fn{width:28px;height:28px;border-radius:9px;background:var(--grad-warm);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;margin-bottom:9px;box-shadow:0 5px 12px rgba(249,115,22,.35)}
+.fstep b{font-size:13.5px;display:block;margin-bottom:4px}
+.fstep p{font-size:12.5px;color:var(--mut)}
+/* ---------- kinestetik ---------- */
+.labgrid{display:grid;grid-template-columns:1.25fr .75fr;gap:18px;align-items:start}
+.svgwrap{background:#fff;border:1px solid var(--line);border-radius:var(--rad);padding:10px;box-shadow:var(--sh)}
+.svgwrap svg{width:100%;height:auto;display:block;touch-action:none}
+.tgl{display:flex;align-items:center;gap:10px;padding:10px 13px;border:1px solid var(--line);border-radius:13px;margin-bottom:8px;background:#fff;cursor:pointer;font-size:13.5px;font-weight:600;transition:.15s}
+.tgl:hover{border-color:var(--pri)}
+.tgl input{width:17px;height:17px;accent-color:var(--pri)}
+.tgl .sw{width:12px;height:12px;border-radius:4px;flex:none}
+.evalrow{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:13px;padding:8px 11px;border-radius:11px;background:#f4f7fc;margin-bottom:6px}
+.evalrow .vv{font-weight:800;font-size:11.5px;border-radius:999px;padding:2px 10px}
+.evalrow .vv.t{background:rgba(22,163,74,.13);color:var(--ok)}
+.evalrow .vv.f{background:rgba(220,38,38,.12);color:var(--err)}
+.verdict{border-radius:13px;padding:13px 15px;font-weight:700;font-size:13.5px;margin-top:10px;text-align:center;transition:.2s}
+.verdict.in{background:linear-gradient(135deg,rgba(22,163,74,.12),rgba(34,197,94,.16));color:#15803d;border:1px solid #bbf7d0}
+.verdict.out{background:rgba(220,38,38,.08);color:#b91c1c;border:1px solid #fecaca}
+/* ---------- kuis ---------- */
+.qcard{padding-left:26px}
+.qcard:before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--grad)}
+.qcard .qno{font-weight:800;color:var(--pri-d);font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase}
+.qcard p.qtext{margin:8px 0 6px;font-weight:600}
+.qcard ol.sub{margin:6px 0 4px 22px}
+.upzone{border:2px dashed #bcc9e6;border-radius:16px;padding:20px;text-align:center;margin-top:14px;background:linear-gradient(135deg,#f8fafE,#f2f6fd);transition:.2s;cursor:pointer}
+.upzone:hover{border-color:var(--pri);background:linear-gradient(135deg,#eef3ff,#e8f6fb);transform:translateY(-2px);box-shadow:var(--sh)}
+.upzone .uic{width:46px;height:46px;margin:0 auto 9px;border-radius:14px;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(59,91,253,.35)}
+.filestat{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,rgba(22,163,74,.08),rgba(34,197,94,.12));border:1px solid #bbf7d0;color:#15803d;border-radius:13px;padding:11px 15px;margin-top:12px;font-size:13.5px;font-weight:600}
+.filestat .spacer{flex:1}
+/* ---------- peer & refleksi ---------- */
+.pcard{margin-bottom:16px}
+.pcard .phead{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.pcard .ava{width:44px;height:44px;border-radius:13px;background:var(--grad);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none;font-size:15px;box-shadow:0 6px 16px rgba(59,91,253,.35)}
+.crit{display:grid;grid-template-columns:1fr 160px;gap:10px;align-items:center;padding:10px 0;border-bottom:1px dashed var(--line);font-size:13.5px}
+.crit:last-of-type{border-bottom:none}
+/* ---------- guru ---------- */
+.tblwrap{overflow:auto;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:var(--sh)}
+table.tb{width:100%;border-collapse:collapse;font-size:13.5px;min-width:760px}
+table.tb th{background:linear-gradient(180deg,#eef3fe,#e7edfb);text-align:left;padding:12px 14px;font-size:11.5px;text-transform:uppercase;letter-spacing:.7px;color:var(--navy);border-bottom:1px solid var(--line);white-space:nowrap}
+table.tb td{padding:11px 14px;border-bottom:1px solid #edf1f7;vertical-align:top}
+table.tb tr:last-child td{border-bottom:none}
+table.tb tr:hover td{background:#f7f9fe}
+.chip{display:inline-flex;align-items:center;gap:5px;background:rgba(59,91,253,.1);color:var(--pri-d);border-radius:9px;padding:3px 10px;font-size:11.5px;font-weight:700;margin:1px 3px 1px 0;text-decoration:none;transition:.15s}
+.chip:hover{background:rgba(59,91,253,.2)}
+.chip.none{background:#f1f5f9;color:#94a3b8}
+.chip.none:hover{background:#f1f5f9}
+.statgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:17px 18px;box-shadow:var(--sh);display:flex;flex-direction:column;gap:2px;position:relative;overflow:hidden;transition:.18s}
+.stat:hover{transform:translateY(-3px);box-shadow:var(--sh-lg)}
+.stat .sic{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;margin-bottom:9px;background:var(--g,var(--grad));box-shadow:0 6px 16px rgba(23,43,99,.25)}
+.stat b{font-size:26px;font-weight:800;color:var(--navy);display:block;line-height:1.15;letter-spacing:-.5px}
+.stat span.lb{font-size:12.5px;color:var(--mut);font-weight:600}
+.thead{background:linear-gradient(120deg,#0a1533,var(--navy) 45%,#17307f);color:#fff;padding:18px 30px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:20;box-shadow:0 6px 24px rgba(8,15,46,.35)}
+.thead b{font-size:17px}
+.thead .spacer{flex:1}
+.tmain{padding:28px 30px 80px;max-width:1140px;margin:0 auto}
+details.guide{border:1px solid var(--line);border-radius:15px;background:#fff;padding:15px 19px;margin-top:14px}
+details.guide summary{cursor:pointer;font-weight:700;font-size:14px;color:var(--pri-d)}
+details.guide ol{margin:10px 0 10px 20px;font-size:13.5px}
+pre.code{background:#0d1630;color:#d7e3f7;border-radius:13px;padding:15px;font-size:12px;overflow:auto;font-family:ui-monospace,Consolas,monospace;line-height:1.6;border:1px solid #24325c}
+/* ---------- modal & toast ---------- */
+#modal{position:fixed;inset:0;background:rgba(8,13,32,.6);display:flex;align-items:center;justify-content:center;z-index:60;padding:20px;backdrop-filter:blur(4px)}
+.mbox{background:#fff;border-radius:22px;max-width:660px;width:100%;max-height:86vh;display:flex;flex-direction:column;box-shadow:0 40px 100px rgba(0,0,0,.45);animation:pop .24s cubic-bezier(.22,1.4,.36,1);overflow:hidden}
+@keyframes pop{from{opacity:0;transform:scale(.94) translateY(10px)}to{opacity:1;transform:none}}
+.mhead{padding:18px 24px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;background:linear-gradient(180deg,#f7f9ff,#fff)}
+.mhead b{font-size:16.5px;flex:1;letter-spacing:-.2px}
+.mbody{padding:22px 24px;overflow:auto}
+.mfoot{padding:15px 24px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end;background:#fbfcff}
+#toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:rgba(13,27,69,.94);color:#fff;border-radius:14px;padding:13px 24px;font-weight:700;font-size:14px;z-index:80;box-shadow:0 14px 40px rgba(0,0,0,.35);animation:rise .28s both;max-width:90vw;text-align:center;backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.15)}
+#toast.err{background:rgba(185,28,28,.95)}
+#toast.ok{background:rgba(21,128,61,.95)}
+.kv{display:grid;grid-template-columns:150px 1fr;gap:6px 12px;font-size:13.5px;margin-bottom:10px}
+.kv b{color:var(--mut);font-weight:600}
+.sect{font-size:11.5px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--pri-d);margin:16px 0 8px;display:flex;align-items:center;gap:8px}
+.sect:after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+/* ---------- responsif ---------- */
+@media(max-width:960px){
+  .login-wrap{grid-template-columns:1fr}
+  #appView{grid-template-columns:1fr}
+  .side{position:static;height:auto;flex-direction:row;overflow-x:auto;padding:10px;gap:6px;align-items:center}
+  .side .brand,.side .sidefoot,.side .sideuser{display:none}
+  .navitem{width:auto;white-space:nowrap;padding:9px 15px}
+  .navitem .st{display:none}
+  .main{padding:18px 16px 60px}
+  .grid2,.grid3,.labgrid{grid-template-columns:1fr}
+  .flow{grid-template-columns:1fr 1fr}
+  .statgrid{grid-template-columns:1fr 1fr}
+  .crit{grid-template-columns:1fr}
+  .tmain{padding:18px 14px 60px}
+  .thead{padding:14px 16px}
+  .fchip.f2{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ======= IKON SVG ======= -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5V4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></symbol>
+  <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6"/><path d="M10 3v6l-6 9a2 2 0 0 0 2 3h12a2 2 0 0 0 2-3l-6-9V3"/></symbol>
+  <symbol id="i-quiz" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+  <symbol id="i-refl" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19" fill="currentColor"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1.5" fill="currentColor"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M19.4 4.6l-2.1 2.1M6.7 17.3l-2.1 2.1"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.85-3.36L23 10"/><path d="M1 14l4.65 4.36A9 9 0 0 0 20.5 15"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></symbol>
+  <symbol id="i-eyeplay" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polygon points="10,8.5 16,12 10,15.5" fill="currentColor"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 24 24"><path d="M18 11V6.5a1.5 1.5 0 0 0-3 0V11"/><path d="M15 10.5V4.5a1.5 1.5 0 0 0-3 0V10"/><path d="M12 10V3.5a1.5 1.5 0 0 0-3 0V11"/><path d="M9 11v-1a1.5 1.5 0 0 0-3 0v5a7 7 0 0 0 7 7h1a7 7 0 0 0 7-7v-4a1.5 1.5 0 0 0-3 0"/></symbol>
+  <symbol id="i-ear" viewBox="0 0 24 24"><path d="M6 8.5a6 6 0 1 1 12 0c0 3-2 4-3.5 5.5S13 17 13 19a3 3 0 0 1-6 0"/><path d="M9.5 8.5a2.5 2.5 0 0 1 5 0c0 1.5-1 2-2 3"/></symbol>
+</svg>
+
+<!-- ======= HALAMAN LOGIN ======= -->
+<div id="loginView">
+  <div class="login-wrap">
+    <div class="hero">
+      <span class="fchip f1">x + 2y &le; 10</span>
+      <span class="fchip f2">2x + y &le; 8</span>
+      <span class="fchip f3">x &ge; 0 , y &ge; 0</span>
+      <div class="kicker">Media Pembelajaran Interaktif</div>
+      <h1>Sistem Pertidaksamaan Linear <em>Dua Variabel</em></h1>
+      <p>Matematika Kelas X — materi ringkas, laboratorium gaya belajar, asesmen formatif dengan unggah jawaban, penilaian antar teman, dan refleksi dalam satu halaman.</p>
+      <svg class="hero-svg" viewBox="0 0 340 160" aria-hidden="true">
+        <line x1="30" y1="140" x2="330" y2="140" stroke="rgba(255,255,255,.35)" stroke-width="1.4"/>
+        <line x1="30" y1="140" x2="30" y2="8" stroke="rgba(255,255,255,.35)" stroke-width="1.4"/>
+        <polygon class="rg" points="30,140 142,140 86,44 30,20" fill="#7de3f4" opacity=".28"/>
+        <line class="dl" x1="30" y1="20" x2="310" y2="140" stroke="#7de3f4" stroke-width="2.6" stroke-linecap="round"/>
+        <line class="dl dl2" x1="64" y1="6" x2="142" y2="140" stroke="#fcd34d" stroke-width="2.6" stroke-linecap="round"/>
+        <g fill="#fff"><circle cx="30" cy="140" r="3.4"/><circle cx="142" cy="140" r="3.4"/><circle cx="86" cy="44" r="3.4"/><circle cx="30" cy="20" r="3.4"/></g>
+      </svg>
+      <div class="penyusun">Disusun oleh: <b>Nesthi Wahyuningsih, S.Pd.</b></div>
+    </div>
+    <div class="login-card">
+      <h2>Masuk untuk Memulai</h2>
+      <p class="small mut">Ketik nama bebas (tidak harus sama dengan daftar), lalu pastikan kelompokmu benar.</p>
+      <label class="f" for="inpNama">Nama Siswa</label>
+      <input type="text" id="inpNama" autocomplete="off">
+      <div class="grp-hint" id="grpHint"></div>
+      <label class="f" for="selGrp">Kelompok</label>
+      <select id="selGrp"></select>
+      <p class="small mut" style="margin-top:6px">Kelompok terisi otomatis bila nama sesuai daftar kelas. Bila nama tidak ada di daftar, pilih kelompokmu sendiri.</p>
+      <button class="btn btn-pri" id="btnMulai" style="margin-top:16px;justify-content:center">
+        <svg class="ic"><use href="#i-chev"/></svg> Mulai Belajar
+      </button>
+      <div class="login-foot">
+        <button class="linkbtn" id="btnGuruLogin"><svg class="ic" style="width:15px;height:15px"><use href="#i-lock"/></svg> Dashboard Guru</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======= APLIKASI SISWA ======= -->
+<div id="appView" class="hide">
+  <aside class="side">
+    <div class="brand">
+      <div class="logo">X</div>
+      <div><b>SPtLDV</b><span>Matematika Kelas X</span></div>
+    </div>
+    <div class="sideuser hide" id="sideUser">
+      <span class="suava" id="suAva">-</span>
+      <span class="sutx"><b id="suNama"></b><small id="suGrp"></small></span>
+    </div>
+    <button class="navitem on" data-page="beranda"><svg class="ic"><use href="#i-home"/></svg> Beranda <span class="st" id="st-beranda"></span></button>
+    <button class="navitem" data-page="materi"><svg class="ic"><use href="#i-book"/></svg> Materi <span class="st" id="st-materi"></span></button>
+    <button class="navitem" data-page="lab"><svg class="ic"><use href="#i-flask"/></svg> Laboratorium <span class="st" id="st-lab"></span></button>
+    <button class="navitem" data-page="kuis"><svg class="ic"><use href="#i-quiz"/></svg> Kuis <span class="st" id="st-kuis"></span></button>
+    <button class="navitem" data-page="peer"><svg class="ic"><use href="#i-users"/></svg> Penilaian Teman <span class="st" id="st-peer"></span></button>
+    <button class="navitem" data-page="refleksi"><svg class="ic"><use href="#i-refl"/></svg> Refleksi <span class="st" id="st-refleksi"></span></button>
+    <button class="navitem" id="btnGuruApp" style="margin-top:10px;border-top:1px solid rgba(255,255,255,.15);border-radius:0;padding-top:14px"><svg class="ic"><use href="#i-lock"/></svg> Dashboard Guru</button>
+    <button class="navitem" id="btnKeluar"><svg class="ic"><use href="#i-back"/></svg> Ganti Siswa</button>
+    <div class="sidefoot">Disusun oleh:<br><b style="color:#fff">Nesthi Wahyuningsih, S.Pd.</b></div>
+  </aside>
+
+  <main class="main">
+    <!-- BERANDA -->
+    <section class="page" id="pg-beranda">
+      <div class="topbar"><h2 id="salam">Halo!</h2><span class="badge teal" id="badgeGrp"></span><div class="spacer"></div><span class="badge" id="badgeProg">0% selesai</span></div>
+      <div class="prog-wrap">
+        <b style="font-size:15px">Alur Belajar Kamu</b>
+        <p class="small mut">Selesaikan lima langkah berikut secara berurutan. Centang hijau berarti langkah sudah selesai.</p>
+        <div class="prog-bar"><i id="progBar" style="width:0%"></i></div>
+        <div class="steps" id="stepsList"></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h3 style="font-size:16px;margin-bottom:8px">Tentang Media Ini</h3>
+          <p class="small mut">Media pembelajaran mandiri materi <b>Sistem Pertidaksamaan Linear Dua Variabel (SPtLDV)</b> untuk kelas X. Seluruh aktivitasmu tersimpan otomatis di perangkat ini dan dapat diunduh guru melalui dashboard.</p>
+          <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+            <span class="badge">Matematika</span><span class="badge teal">Kelas X</span><span class="badge warn">Fase E</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3 style="font-size:16px;margin-bottom:8px">Kesepakatan Kelas</h3>
+          <ul class="small" style="margin-left:18px;color:var(--mut)">
+            <li>Kerjakan kuis secara mandiri di buku latihan, lalu unggah fotonya.</li>
+            <li>Nilai teman sekelompok secara jujur dan objektif.</li>
+            <li>Isi refleksi dengan jawabanmu sendiri, bukan buatan AI.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- MATERI -->
+    <section class="page hide" id="pg-materi">
+      <div class="topbar"><h2>Materi Esensial</h2><div class="spacer"></div><span class="badge ok" id="materiDone"></span></div>
+      <div class="card mcard">
+        <h3><span class="tag"><svg class="ic" style="width:16px;height:16px"><use href="#i-book"/></svg></span> 1. Pengertian SPtLDV</h3>
+        <p><b>Sistem Pertidaksamaan Linear Dua Variabel (SPtLDV)</b> adalah kumpulan dua atau lebih pertidaksamaan linear dengan dua variabel (misal <i>x</i> dan <i>y</i>) yang dicari penyelesaiannya secara <b>bersama-sama</b>.</p>
+        <ul>
+          <li><b>Penyelesaian:</b> pasangan (<i>x</i>, <i>y</i>) yang memenuhi <b>semua</b> pertidaksamaan dalam sistem.</li>
+          <li><b>Daerah penyelesaian:</b> irisan seluruh daerah half-plane (setengah bidang) dari tiap pertidaksamaan pada bidang Kartesius.</li>
+        </ul>
+        <div style="margin-top:10px">
+          <span class="math">x + 2y &le; 10</span><span class="math">2x + y &le; 8</span><span class="math">x &ge; 0</span><span class="math">y &ge; 0</span>
+          <p class="small mut" style="margin-top:4px">Contoh sebuah SPtLDV: keempat pertidaksamaan harus benar serentak.</p>
+        </div>
+      </div>
+
+      <div class="card mcard">
+        <h3><span class="tag"><svg class="ic" style="width:16px;height:16px"><use href="#i-chart"/></svg></span> 2. Langkah Menentukan Daerah Penyelesaian</h3>
+        <div class="flow">
+          <div class="fstep"><div class="fn">1</div><b>Gambar garis batas</b><p>Ubah tanda menjadi "=" lalu gambar garis melalui titik potong sumbu.</p></div>
+          <div class="fstep"><div class="fn">2</div><b>Pilih titik uji</b><p>Ambil titik di luar garis, misal (0, 0), substitusikan ke pertidaksamaan.</p></div>
+          <div class="fstep"><div class="fn">3</div><b> Arsir sisi yang benar</b><p>Jika pernyataan benar, arsir sisi yang memuat titik uji; jika salah, sisi sebaliknya.</p></div>
+          <div class="fstep"><div class="fn">4</div><b>Ambil irisan</b><p>Daerah yang terarsir oleh <b>semua</b> pertidaksamaan adalah daerah penyelesaian.</p></div>
+        </div>
+        <div class="note"><b>Catat:</b> tanda &le; atau &ge; &rarr; garis batas digambar <b>penuh</b> (titik pada garis ikut menjadi penyelesaian); tanda &lt; atau &gt; &rarr; garis batas <b>putus-putus</b>.</div>
+      </div>
+
+      <div class="card mcard">
+        <h3><span class="tag"><svg class="ic" style="width:16px;height:16px"><use href="#i-eye"/></svg></span> 3. Contoh Terselesaikan</h3>
+        <p class="small">Tentukan daerah penyelesaian dari: <span class="math">x + y &le; 6</span><span class="math">2x + y &le; 8</span><span class="math">x &ge; 0</span><span class="math">y &ge; 0</span></p>
+        <div class="grid2" style="margin-top:12px;align-items:center">
+          <div class="svgwrap">
+            <svg viewBox="0 0 400 360" role="img" aria-label="Grafik daerah penyelesaian contoh">
+              <rect x="0" y="0" width="400" height="360" fill="#fbfdff"/>
+              <g stroke="#e5ecf5" stroke-width="1">
+                <line x1="40" y1="320" x2="388" y2="320"/><line x1="40" y1="320" x2="40" y2="16"/>
+              </g>
+              <polygon points="40,320 208,320 124,176 40,104" fill="#1e40af" opacity=".16"/>
+              <polygon points="40,320 208,320 124,176 40,104" fill="none" stroke="#1e40af" stroke-width="2"/>
+              <line x1="40" y1="104" x2="292" y2="320" stroke="#0e7490" stroke-width="2.5"/>
+              <line x1="40" y1="32" x2="208" y2="320" stroke="#f59e0b" stroke-width="2.5"/>
+              <g font-size="12" fill="#5b6b80" font-family="inherit">
+                <text x="390" y="324">x</text><text x="32" y="14">y</text>
+                <text x="28" y="336">0</text><text x="204" y="336">4</text><text x="372" y="336">8</text>
+                <text x="20" y="108">6</text><text x="20" y="36">8</text>
+                <text x="216" y="204" fill="#0e7490" font-weight="700">x + y = 6</text>
+                <text x="140" y="248" fill="#b45309" font-weight="700">2x + y = 8</text>
+                <text x="56" y="252" fill="#1e40af" font-weight="800">Daerah</text>
+                <text x="56" y="268" fill="#1e40af" font-weight="800">penyelesaian</text>
+              </g>
+              <g fill="#0b1526"><circle cx="40" cy="320" r="3.5"/><circle cx="208" cy="320" r="3.5"/><circle cx="124" cy="176" r="3.5"/><circle cx="40" cy="104" r="3.5"/></g>
+              <g font-size="11.5" font-weight="700" fill="#0b1526">
+                <text x="46" y="338">O(0,0)</text><text x="188" y="312">A(4,0)</text><text x="132" y="172">B(2,4)</text><text x="48" y="100">C(0,6)</text>
+              </g>
+            </svg>
+          </div>
+          <div class="small">
+            <p><b>Garis x + y = 6</b> melalui (6, 0) dan (0, 6).<br><b>Garis 2x + y = 8</b> melalui (4, 0) dan (0, 8).</p>
+            <p style="margin-top:8px"><b>Titik uji (0, 0):</b> 0 + 0 &le; 6 (benar) dan 0 &le; 8 (benar), sehingga daerah penyelesaian berada di sisi yang memuat titik O, dibatasi x &ge; 0 dan y &ge; 0.</p>
+            <p style="margin-top:8px"><b>Titik pojok:</b> perpotongan x + y = 6 dengan 2x + y = 8 adalah B(2, 4). Daerah penyelesaian = segi empat O(0,0), A(4,0), B(2,4), C(0,6).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mcard">
+        <h3><span class="tag"><svg class="ic" style="width:16px;height:16px"><use href="#i-quiz"/></svg></span> 4. Memodelkan Soal Cerita</h3>
+        <ul>
+          <li><b>Langkah 1:</b> tetapkan variabel, misal <i>x</i> dan <i>y</i> = banyaknya masing-masing produk.</li>
+          <li><b>Langkah 2:</b> susun tabel kendala (bahan, waktu, biaya) per produk dan ketersediaannya.</li>
+          <li><b>Langkah 3:</b> tulis pertidaksamaan tiap kendala, lalu tambah syarat wajar <span class="math">x &ge; 0</span><span class="math">y &ge; 0</span>.</li>
+        </ul>
+        <div class="note"><b>Mini contoh:</b> Roti A butuh 200 g tepung dan 100 g mentega; roti B butuh 100 g tepung dan 150 g mentega. Tersedia 4.000 g tepung dan 3.000 g mentega. Model: 200x + 100y &le; 4.000; 100x + 150y &le; 3.000; x &ge; 0; y &ge; 0.</div>
+      </div>
+
+      <div class="card mcard">
+        <h3><span class="tag"><svg class="ic" style="width:16px;height:16px"><use href="#i-check"/></svg></span> 5. Tips Cepat</h3>
+        <ul>
+          <li>Titik potong sumbu: set y = 0 untuk potong sumbu x, dan x = 0 untuk potong sumbu y.</li>
+          <li>Titik uji (0, 0) paling cepat, selama tidak terletak pada garis batas.</li>
+          <li>Koefisien positif dengan tanda &le; biasanya berarti daerah <b>bawah</b> garis; &ge; berarti daerah <b>atas</b>.</li>
+          <li>Periksa titik pojok dengan eliminasi/substitusi dua garis batas yang berpotongan.</li>
+        </ul>
+        <div style="margin-top:14px"><button class="btn btn-ok" id="btnMateriOk"><svg class="ic"><use href="#i-check"/></svg> Saya sudah membaca materi</button></div>
+      </div>
+    </section>
+
+    <!-- LABORATORIUM -->
+    <section class="page hide" id="pg-lab">
+      <div class="topbar"><h2>Laboratorium Sumber Belajar</h2><div class="spacer"></div><span class="badge ok" id="labDone"></span></div>
+      <p class="small mut" style="margin-top:-8px;margin-bottom:14px">Pilih sumber belajar sesuai gaya belajarmu. Ketiganya membahas materi yang sama dengan cara berbeda.</p>
+      <div class="tabs">
+        <button class="tab on" data-lab="visual"><svg class="ic" style="width:16px;height:16px"><use href="#i-eye"/></svg> Visual</button>
+        <button class="tab" data-lab="auditorial"><svg class="ic" style="width:16px;height:16px"><use href="#i-ear"/></svg> Auditorial</button>
+        <button class="tab" data-lab="kinestetik"><svg class="ic" style="width:16px;height:16px"><use href="#i-hand"/></svg> Kinestetik</button>
+      </div>
+
+      <div class="labpane on" id="lab-visual">
+        <div class="card">
+          <h3 style="font-size:16px;margin-bottom:6px">Peta Konsep dalam Satu Gambar</h3>
+          <p class="small mut">Amati alur dan warna: tiap pertidaksamaan menyumbang satu arsiran; irisan semua arsiran (biru pekat) adalah daerah penyelesaian.</p>
+          <div class="svgwrap" style="margin-top:12px">
+            <svg viewBox="0 0 760 330" role="img" aria-label="Peta konsep SPtLDV">
+              <defs>
+                <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#94a3b8"/></marker>
+              </defs>
+              <g font-family="inherit">
+                <rect x="10" y="20" width="160" height="64" rx="14" fill="#e8eefc" stroke="#1e40af"/>
+                <text x="90" y="46" text-anchor="middle" font-size="13" font-weight="800" fill="#1e40af">SPtLDV</text>
+                <text x="90" y="64" text-anchor="middle" font-size="11" fill="#5b6b80">2+ pertidaksamaan linear</text>
+                <line x1="170" y1="52" x2="205" y2="52" stroke="#94a3b8" stroke-width="2" marker-end="url(#ar)"/>
+                <rect x="210" y="20" width="160" height="64" rx="14" fill="#e0f2f6" stroke="#0e7490"/>
+                <text x="290" y="46" text-anchor="middle" font-size="13" font-weight="800" fill="#0e7490">Garis batas tiap</text>
+                <text x="290" y="64" text-anchor="middle" font-size="13" font-weight="800" fill="#0e7490">pertidaksamaan</text>
+                <line x1="370" y1="52" x2="405" y2="52" stroke="#94a3b8" stroke-width="2" marker-end="url(#ar)"/>
+                <rect x="410" y="20" width="160" height="64" rx="14" fill="#fef3c7" stroke="#f59e0b"/>
+                <text x="490" y="46" text-anchor="middle" font-size="13" font-weight="800" fill="#b45309">Uji titik &amp; arsir</text>
+                <text x="490" y="64" text-anchor="middle" font-size="11" fill="#5b6b80">sisi yang memenuhi</text>
+                <line x1="570" y1="52" x2="605" y2="52" stroke="#94a3b8" stroke-width="2" marker-end="url(#ar)"/>
+                <rect x="610" y="20" width="140" height="64" rx="14" fill="#e7f6ec" stroke="#16a34a"/>
+                <text x="680" y="46" text-anchor="middle" font-size="13" font-weight="800" fill="#15803d">Irisan = daerah</text>
+                <text x="680" y="64" text-anchor="middle" font-size="13" font-weight="800" fill="#15803d">penyelesaian</text>
+              </g>
+              <g>
+                <rect x="30" y="120" width="330" height="190" rx="14" fill="#fff" stroke="#dfe6ef"/>
+                <text x="46" y="146" font-size="12.5" font-weight="800" fill="#0b1526">Setiap pertidaksamaan = satu setengah bidang</text>
+                <g transform="translate(50,160)">
+                  <line x1="0" y1="130" x2="290" y2="130" stroke="#cbd5e1"/><line x1="0" y1="130" x2="0" y2="0" stroke="#cbd5e1"/>
+                  <polygon points="0,130 250,130 0,45" fill="#1e40af" opacity=".22"/>
+                  <line x1="0" y1="45" x2="250" y2="130" stroke="#1e40af" stroke-width="2"/>
+                  <text x="120" y="112" font-size="11.5" font-weight="700" fill="#1e40af">x + 2y &#8804; 10</text>
+                </g>
+                <rect x="400" y="120" width="330" height="190" rx="14" fill="#fff" stroke="#dfe6ef"/>
+                <text x="416" y="146" font-size="12.5" font-weight="800" fill="#0b1526">Irisan keduanya + x &#8805; 0, y &#8805; 0</text>
+                <g transform="translate(420,160)">
+                  <line x1="0" y1="130" x2="290" y2="130" stroke="#cbd5e1"/><line x1="0" y1="130" x2="0" y2="0" stroke="#cbd5e1"/>
+                  <polygon points="0,130 250,130 0,45" fill="#1e40af" opacity=".12"/>
+                  <polygon points="0,130 100,130 48,26 0,10" fill="#0e7490" opacity=".16"/>
+                  <polygon points="0,130 100,130 48,26 0,10" fill="none" stroke="#0e7490" stroke-width="2"/>
+                  <line x1="0" y1="45" x2="250" y2="130" stroke="#1e40af" stroke-width="1.6"/>
+                  <line x1="100" y1="130" x2="0" y2="-10" stroke="#f59e0b" stroke-width="1.6"/>
+                  <text x="60" y="100" font-size="11.5" font-weight="800" fill="#0e7490">DP</text>
+                </g>
+              </g>
+            </svg>
+          </div>
+          <div class="grid3" style="margin-top:14px">
+            <div class="fstep"><div class="fn" style="background:#1e40af">A</div><b>Warna = pertidaksamaan</b><p>Biru: x + 2y &le; 10. Kuning: 2x + y &le; 8. Arsiran tipis = sisi yang benar.</p></div>
+            <div class="fstep"><div class="fn" style="background:#0e7490">B</div><b>Irisan = jawaban</b><p>Hanya daerah yang terkena semua arsiran yang menjadi daerah penyelesaian.</p></div>
+            <div class="fstep"><div class="fn" style="background:#16a34a">C</div><b>Titik pojok</b><p>Perpotongan dua garis batas; berguna untuk memeriksa dan untuk soal optimum.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="labpane" id="lab-auditorial">
+        <div class="player">
+          <button class="pbtn" id="btnSpeak" aria-label="Putar narasi materi"><svg class="ic fill"><use href="#i-play"/></svg></button>
+          <div>
+            <b style="font-size:15px">Narasi Audio Materi</b>
+            <p class="small" style="color:#cdeef7" id="speakStat">Tekan tombol putar untuk mendengarkan ringkasan materi (suara dihasilkan perangkat, tanpa internet).</p>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="card">
+            <h3 style="font-size:15px;margin-bottom:8px">Video Pendukung</h3>
+            <div class="vlist">
+              <a class="vitem" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=video+materi+sistem+pertidaksamaan+linear+dua+variabel+kelas+X">
+                <span class="vic"><svg class="ic"><use href="#i-eyeplay"/></svg></span>
+                <span><b class="small">Video penjelasan SPtLDV (YouTube)</b><br><span class="small mut">Buka daftar video pembelajaran, pilih durasi 5-10 menit.</span></span>
+              </a>
+              <a class="vitem" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=contoh+soal+daerah+penyelesaian+sistem+pertidaksamaan+linear+dua+variabel">
+                <span class="vic"><svg class="ic"><use href="#i-eyeplay"/></svg></span>
+                <span><b class="small">Video contoh soal daerah penyelesaian</b><br><span class="small mut">Cara mengarsir dan menguji titik langkah demi langkah.</span></span>
+              </a>
+            </div>
+            <div class="note"><b>Tips auditorial:</b> setelah mendengarkan, ucapkan ulang dengan kalimatmu sendiri seolah menjelaskan kepada teman sekelompokmu.</div>
+          </div>
+          <div class="card">
+            <h3 style="font-size:15px;margin-bottom:8px">Naskah Narasi</h3>
+            <p class="small mut" id="naskah">Sistem pertidaksamaan linear dua variabel adalah kumpulan dua atau lebih pertidaksamaan linear dengan dua variabel yang diselesaikan bersama-sama. Penyelesaiannya berupa pasangan x dan y yang memenuhi semua pertidaksamaan. Daerah penyelesaian diperoleh dengan menggambar garis batas tiap pertidaksamaan, menguji sebuah titik, mengarsir sisi yang memenuhi, lalu mengambil irisan seluruh arsiran. Tanda kurang dari atau sama dengan, serta lebih dari atau sama dengan, digambar dengan garis penuh. Pada soal cerita, kendala banyaknya benda menambah syarat x dan y tidak negatif. Selamat berlatih, kamu pasti bisa.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="labpane" id="lab-kinestetik">
+        <div class="card" style="margin-bottom:14px">
+          <h3 style="font-size:15px">Grafik Interaktif: Sentuh, Geser, Temukan</h3>
+          <p class="small mut">Seret titik <b>P</b> pada grafik dan perhatikan keempat pernyataan di samping berubah benar/salah. Nyalakan atau matikan arsiran tiap pertidaksamaan untuk melihat bagaimana irisan terbentuk.</p>
+        </div>
+        <div class="labgrid">
+          <div class="svgwrap">
+            <svg id="labSvg" viewBox="0 0 640 600" role="img" aria-label="Grafik interaktif SPtLDV">
+              <rect x="0" y="0" width="640" height="600" fill="#fbfdff"/>
+              <g id="gHalves"></g>
+              <polygon id="dpPoly" points="" fill="#1e40af" opacity=".30" stroke="#1e40af" stroke-width="2.5"/>
+              <line id="axX" stroke="#94a3b8" stroke-width="1.6"/>
+              <line id="axY" stroke="#94a3b8" stroke-width="1.6"/>
+              <g id="gGrid" stroke="#eef2f8" stroke-width="1"></g>
+              <line id="line1" stroke="#0e7490" stroke-width="2.6"/>
+              <line id="line2" stroke="#f59e0b" stroke-width="2.6"/>
+              <g font-size="13" fill="#5b6b80">
+                <text id="axLX">x</text><text id="axLY">y</text>
+                <text id="tk0">0</text><text id="tk4x">4</text><text id="tk8x">8</text><text id="tk4y">4</text><text id="tk8y">8</text>
+              </g>
+              <text id="lbl1" font-size="14" font-weight="800" fill="#0e7490">x + 2y = 10</text>
+              <text id="lbl2" font-size="14" font-weight="800" fill="#b45309">2x + y = 8</text>
+              <text id="dpLbl" font-size="15" font-weight="800" fill="#1e3a8a">Daerah penyelesaian</text>
+              <g id="gPoint" style="cursor:grab">
+                <circle id="pHalo" r="16" fill="#dc2626" opacity=".18"/>
+                <circle id="pDot" r="8" fill="#dc2626" stroke="#fff" stroke-width="2.5"/>
+                <text id="pTxt" font-size="13.5" font-weight="800" fill="#b91c1c"></text>
+              </g>
+            </svg>
+          </div>
+          <div>
+            <label class="tgl" style="background:#f0f7fa"><input type="checkbox" id="tg1" checked><span class="sw" style="background:#0e7490"></span> x + 2y &le; 10</label>
+            <label class="tgl" style="background:#fffaf0"><input type="checkbox" id="tg2" checked><span class="sw" style="background:#f59e0b"></span> 2x + y &le; 8</label>
+            <label class="tgl"><input type="checkbox" id="tg3" checked><span class="sw" style="background:#64748b"></span> x &ge; 0</label>
+            <label class="tgl"><input type="checkbox" id="tg4" checked><span class="sw" style="background:#94a3b8"></span> y &ge; 0</label>
+            <div class="sect">Uji titik P</div>
+            <div id="evalList"></div>
+            <div class="verdict out" id="verdict">Titik P di luar daerah penyelesaian</div>
+            <button class="btn btn-teal btn-sm" id="btnTantang" style="margin-top:12px;width:100%;justify-content:center"><svg class="ic" style="width:16px;height:16px"><use href="#i-hand"/></svg> Tantangan: letakkan P di daerah penyelesaian</button>
+            <button class="btn btn-ghost btn-sm" id="btnResetP" style="margin-top:8px;width:100%;justify-content:center"><svg class="ic" style="width:16px;height:16px"><use href="#i-refresh"/></svg> Acak ulang posisi P</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KUIS -->
+    <section class="page hide" id="pg-kuis">
+      <div class="topbar"><h2>Asesmen Formatif SPtLDV</h2><div class="spacer"></div><span class="badge" id="kuisDone">0/2 terunggah</span></div>
+      <div class="card" style="margin-bottom:16px">
+        <p class="small"><b>Cara pengerjaan:</b> tulis penyelesaian lengkap (gambar grafik + alasan) di buku latihanmu, foto atau pindai hasilnya, lalu unggah pada setiap nomor. Berkas tersimpan otomatis dan dapat diunduh guru.</p>
+      </div>
+      <div class="card qcard mcard">
+        <div class="qno">Nomor 1</div>
+        <p class="qtext">Tentukan daerah penyelesaian dari sistem pertidaksamaan linear dua variabel berikut, kemudian tentukan apakah titik (2, 3) merupakan anggota himpunan penyelesaiannya! Berikan alasanmu.</p>
+        <ol class="sub small">
+          <li>x + 2y &le; 10 &nbsp;.... (1)</li>
+          <li>2x + y &le; 8 &nbsp;.... (2)</li>
+          <li>x &ge; 0</li>
+          <li>y &ge; 0</li>
+        </ol>
+        <div class="upzone" id="uz1">
+          <div class="uic"><svg class="ic"><use href="#i-up"/></svg></div>
+          <b class="small">Unggah jawaban nomor 1</b>
+          <p class="small mut">Foto (JPG/PNG) atau PDF, maksimal 2,5 MB</p>
+          <input type="file" id="file1" accept="image/*,application/pdf" class="hide">
+        </div>
+        <div id="stat1"></div>
+      </div>
+      <div class="card qcard mcard">
+        <div class="qno">Nomor 2</div>
+        <p class="qtext">UMKM Batik Plumpungan berencana mengatur produksi Batik Tulis dan Batik Cap pada hari berikutnya. Persediaan bahan kain yang tersedia adalah 36 meter, sedangkan waktu pewarnaan yang tersedia adalah 14 jam. Untuk membuat 1 Batik Tulis diperlukan 4 meter kain dan 1 jam waktu pewarnaan, sedangkan untuk membuat 1 Batik Cap diperlukan 3 meter kain dan 2 jam waktu pewarnaan. Jika x menyatakan banyak Batik Tulis dan y menyatakan banyak Batik Cap yang diproduksi:</p>
+        <ol class="sub small" style="list-style-type:lower-alpha">
+          <li>Tentukan sistem pertidaksamaan linear dua variabel yang memodelkan kendala bahan kain dan waktu pewarnaan tersebut!</li>
+          <li>Tentukan apakah pengrajin dapat memproduksi 8 Batik Tulis dan 3 Batik Cap dalam sehari. Berikan alasanmu berdasarkan daerah penyelesaian yang diperoleh!</li>
+        </ol>
+        <div class="upzone" id="uz2">
+          <div class="uic"><svg class="ic"><use href="#i-up"/></svg></div>
+          <b class="small">Unggah jawaban nomor 2</b>
+          <p class="small mut">Foto (JPG/PNG) atau PDF, maksimal 2,5 MB</p>
+          <input type="file" id="file2" accept="image/*,application/pdf" class="hide">
+        </div>
+        <div id="stat2"></div>
+      </div>
+    </section>
+
+    <!-- PEER REVIEW -->
+    <section class="page hide" id="pg-peer">
+      <div class="topbar"><h2>Penilaian Antar Teman</h2><div class="spacer"></div><span class="badge" id="peerDone">belum dikirim</span></div>
+      <div class="card" style="margin-bottom:16px">
+        <p class="small"><b>Petunjuk:</b> nilailah setiap teman sekelompokmu (selain dirimu) berdasarkan kontribusi mereka selama pembelajaran SPtLDV hari ini. Skala: <b>1 = Kurang, 2 = Cukup, 3 = Baik, 4 = Sangat Baik</b>. Hasil penilaian hanya dilihat guru.</p>
+      </div>
+      <div id="peerList"></div>
+      <div class="card" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <button class="btn btn-pri" id="btnPeerKirim"><svg class="ic"><use href="#i-check"/></svg> Kirim Penilaian</button>
+        <span class="small mut" id="peerNote">Lengkapi semua kriteria terlebih dahulu.</span>
+      </div>
+    </section>
+
+    <!-- REFLEKSI -->
+    <section class="page hide" id="pg-refleksi">
+      <div class="topbar"><h2>Refleksi Pembelajaran</h2><div class="spacer"></div><span class="badge" id="reflDone">belum dikirim</span></div>
+      <div class="card">
+        <p class="small mut" style="margin-bottom:6px">Jawablah dengan jujur sesuai pengalamanmu hari ini.</p>
+        <label class="f">1. Apa yang telah kalian pahami setelah melakukan pembelajaran pada materi ini?</label>
+        <textarea id="refl1" placeholder="Tuliskan pemahamanmu..."></textarea>
+        <label class="f">2. Jika ada, materi apa yang belum dipahami/dikuasai?</label>
+        <textarea id="refl2" placeholder="Tuliskan bagian yang masih membingungkan, atau tulis 'tidak ada'..."></textarea>
+        <label class="f">3. Bagaimana perasaan kalian setelah mengikuti pembelajaran hari ini?</label>
+        <textarea id="refl3" placeholder="Tuliskan perasaanmu..."></textarea>
+        <div style="margin-top:16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <button class="btn btn-pri" id="btnReflKirim"><svg class="ic"><use href="#i-check"/></svg> Kirim Refleksi</button>
+          <span class="small mut" id="reflNote"></span>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ======= DASHBOARD GURU ======= -->
+<div id="teacherView" class="hide">
+  <div class="thead">
+    <svg class="ic"><use href="#i-lock"/></svg><b>Dashboard Guru — SPtLDV Kelas X</b>
+    <span class="small" style="color:#a9c1ea">Nesthi Wahyuningsih, S.Pd.</span>
+    <div class="spacer"></div>
+    <button class="btn btn-ghost btn-sm" id="btnTBack"><svg class="ic" style="width:15px;height:15px"><use href="#i-back"/></svg> Kembali</button>
+  </div>
+  <div class="tmain">
+    <div class="statgrid" id="tStats"></div>
+    <div class="card" style="margin-bottom:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <button class="btn btn-pri btn-sm" id="btnCsv"><svg class="ic" style="width:15px;height:15px"><use href="#i-down"/></svg> Unduh Rekap (CSV)</button>
+      <button class="btn btn-teal btn-sm" id="btnZip"><svg class="ic" style="width:15px;height:15px"><use href="#i-down"/></svg> Unduh Semua Berkas Jawaban (ZIP)</button>
+      <button class="btn btn-ghost btn-sm" id="btnJson"><svg class="ic" style="width:15px;height:15px"><use href="#i-down"/></svg> Cadangan JSON</button>
+      <div class="spacer" style="flex:1"></div>
+      <button class="btn btn-err btn-sm" id="btnWipe"><svg class="ic" style="width:15px;height:15px"><use href="#i-x"/></svg> Hapus Semua Data</button>
+    </div>
+    <div class="tblwrap"><table class="tb" id="tTable"></table></div>
+
+    <div class="card" style="margin-top:18px">
+      <h3 style="font-size:15px;display:flex;gap:8px;align-items:center"><svg class="ic" style="width:17px;height:17px"><use href="#i-gear"/></svg> Pengaturan</h3>
+      <div class="grid2" style="margin-top:6px">
+        <div>
+          <label class="f" style="margin-top:4px">Kata sandi dashboard</label>
+          <div style="display:flex;gap:8px"><input type="text" id="inpPass"><button class="btn btn-ghost btn-sm" id="btnPass">Simpan</button></div>
+          <label class="f">URL sinkronisasi Google Sheets (opsional)</label>
+          <div style="display:flex;gap:8px"><input type="text" id="inpSync" placeholder="https://script.google.com/macros/s/.../exec"><button class="btn btn-ghost btn-sm" id="btnSync">Simpan</button></div>
+          <p class="small mut" style="margin-top:8px">Jika diisi, setiap kiriman siswa juga dikirim otomatis ke Google Sheets Anda, sehingga jawaban dari perangkat siswa mana pun terkumpul.</p>
+          <button class="btn btn-ok btn-sm" id="btnCopySiswa" style="margin-top:10px"><svg class="ic" style="width:15px;height:15px"><use href="#i-down"/></svg> Unduh HTML Versi Siswa (terkonfigurasi)</button>
+        </div>
+        <div>
+          <details class="guide" style="margin-top:4px">
+            <summary>Panduan singkat sinkronisasi online (5 langkah)</summary>
+            <ol>
+              <li>Buat Google Sheets baru, menu <b>Ekstensi &gt; Apps Script</b>.</li>
+              <li>Tempel kode di bawah ini, lalu simpan.</li>
+              <li><b>Deploy &gt; New deployment &gt; Web app</b>; Execute as: <b>Me</b>; Who has access: <b>Anyone</b>. Salin URL web app.</li>
+              <li>Tempel URL tersebut pada kolom di samping, klik Simpan.</li>
+              <li>Unduh <b>HTML versi siswa</b> dan bagikan file itu ke perangkat siswa; kiriman mereka masuk ke Sheets dan folder Drive Anda.</li>
+            </ol>
+            <pre class="code" id="appsCode">function doPost(e) {
+  var d = JSON.parse(e.postData.contents);
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName('Data') || ss.insertSheet('Data');
+  var link = '';
+  if (d.file &amp;&amp; d.file.base64) {
+    var it = DriveApp.getFoldersByName('SPtLDV_Jawaban');
+    var folder = it.hasNext() ? it.next() : DriveApp.createFolder('SPtLDV_Jawaban');
+    var blob = Utilities.newBlob(Utilities.base64Decode(d.file.base64), d.file.type || 'application/octet-stream', d.file.name);
+    link = folder.createFile(blob).getUrl();
+  }
+  sh.appendRow([new Date(), d.nama || '', d.kelompok || '', d.jenis || '', d.ket || '', link]);
+  return ContentService.createTextOutput('OK');
+}</pre>
+          </details>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal" class="hide"><div class="mbox"><div class="mhead"><b id="mTitle"></b><button class="linkbtn" id="mClose"><svg class="ic"><use href="#i-x"/></svg></button></div><div class="mbody" id="mBody"></div><div class="mfoot" id="mFoot"></div></div></div>
+<div id="toast" class="hide"></div>
+
+<script id="syncconf">window.SYNC_URL="";</script>
+<script>
+"use strict";
+/* ================= DATA DASAR ================= */
+const ROSTER=[
+ {n:1,anggota:["Elshadday Zefaca Christyantama","Evan Sinatra","Fidela Indah Agatha","Mikhael Dimas Fiesta","Muhammad Sakti Ramadhana Almaarif"]},
+ {n:2,anggota:["Rajendra Jabbar Dyassassa","Adinata Trifosa Wismandaru","Adiatna Trifena Wismandari","Aira Cheeiril Supriyanto","Allyfa Aulya Putry"]},
+ {n:3,anggota:["Anissyafa Al Kayla","Ashyfa Kaylan Rizq Wardhani","Azhara Putri Absari","Carlylino Fernanda","Graisa Angela"]},
+ {n:4,anggota:["Dewi Arimbi","Dinda Buana Tunggadewi","Fatihah Aminah","Giartina Wulan Octavia","Christian Vicky Nathanael"]},
+ {n:5,anggota:["Nendia Cherice Pepita","Tarisa Cein Nabilah","Zida Affiyati","Alvino Albert Wibowo","Angelina Evadine Azaria Wibowo"]},
+ {n:6,anggota:["Brinda Chelsea Demola","Clarissa Givi Alfatheta","Jessica Albentia Evani","Leonel Rifancri Satrio Nugroho","Muhammad Azhim Pamungkas"]},
+ {n:7,anggota:["Petra Chaleb Argi Saputra","Rasty Indiriyani Saputri","Satria Fida Alfin Zuhaeri","Tabitha Nadina Barca","Theo Gusti Nugroho"]}
+];
+const CRIT=["Kontribusi dalam kerja kelompok","Kerjasama dan tanggung jawab","Kejelasan saat menjelaskan ide","Sikap saling menghargai"];
+const norm=s=>(s||"").toLowerCase().replace(/[^a-z0-9]/g,"");
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmtT=ts=>new Date(ts).toLocaleString("id-ID",{day:"2-digit",month:"short",hour:"2-digit",minute:"2-digit"});
+
+/* ================= PENYIMPANAN AMAN ================= */
+let LSOK=true; try{localStorage.setItem("__t","1");localStorage.removeItem("__t")}catch(e){LSOK=false}
+const MEM={};
+function dbLoad(){ if(LSOK){try{return JSON.parse(localStorage.getItem("spoldv_db")||"null")}catch(e){}} return MEM.db||null }
+function dbSave(){ if(LSOK){try{localStorage.setItem("spoldv_db",JSON.stringify(DB));return true}catch(e){return false}} MEM.db=DB; return true }
+let DB=dbLoad()||{students:{},settings:{pass:"guru123",sync:""}};
+DB.settings=DB.settings||{pass:"guru123",sync:""};
+if(DB.settings.sync) window.SYNC_URL=DB.settings.sync;
+let SES=(LSOK?(localStorage.getItem("spoldv_ses")||""):MEM.ses)||"";
+function setSes(v){SES=v; if(LSOK)localStorage.setItem("spoldv_ses",v); else MEM.ses=v}
+function me(){return DB.students[SES]||null}
+function syncPush(o){ const u=window.SYNC_URL||""; if(!u)return;
+  try{ fetch(u,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=UTF-8"},body:JSON.stringify(o)}).catch(()=>{}); }catch(e){} }
+
+/* ================= UTIL UI ================= */
+let toastT; function toast(msg,kind){ const t=$("#toast"); t.textContent=msg; t.className=kind||""; clearTimeout(toastT); toastT=setTimeout(()=>t.classList.add("hide"),3200) }
+function openModal(title,bodyHtml,footHtml){ $("#mTitle").textContent=title; $("#mBody").innerHTML=bodyHtml; $("#mFoot").innerHTML=footHtml||""; $("#modal").classList.remove("hide") }
+function closeModal(){ $("#modal").classList.add("hide") }
+$("#mClose").onclick=closeModal; $("#modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});
+function dl(blob,name){ const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},800) }
+function findGrp(nama){ const n=norm(nama); if(!n)return null;
+  for(const g of ROSTER){ for(const a of g.anggota){ const an=norm(a); if(an===n||an.includes(n)&&n.length>8||n.includes(an)) return g } } return null }
+
+/* ================= LOGIN ================= */
+const inpNama=$("#inpNama"), grpHint=$("#grpHint"), selGrp=$("#selGrp");
+selGrp.innerHTML=ROSTER.map(g=>`<option value="${g.n}">Kelompok ${g.n}</option>`).join("");
+inpNama.addEventListener("input",()=>{ const g=findGrp(inpNama.value);
+  if(g){ grpHint.innerHTML=`<span class="badge ok">Sesuai daftar kelas: Kelompok ${g.n}</span>`; selGrp.value=String(g.n); }
+  else if(inpNama.value.trim()){ grpHint.innerHTML=`<span class="badge">Nama bebas diterima &mdash; pilih kelompok di bawah</span>`; }
+  else grpHint.innerHTML=""; });
+$("#btnMulai").onclick=()=>{ const nama=inpNama.value.trim(); if(nama.length<2){toast("Ketik namamu terlebih dahulu","err");return}
+  const g=findGrp(nama); const id=norm(nama); const kel=g?g.n:(+selGrp.value||null);
+  if(!DB.students[id]) DB.students[id]={nama, kelompok:kel, flags:{}, kuis:{}, peer:null, refleksi:null, ts:Date.now()};
+  else { DB.students[id].nama=nama; if(!DB.students[id].kelompok) DB.students[id].kelompok=kel; }
+  DB.students[id].ts=Date.now(); dbSave(); setSes(id); enterApp(); };
+$("#btnGuruLogin").onclick=askPass; $("#btnGuruApp").onclick=askPass;
+$("#btnKeluar").onclick=()=>{ stopSpeak(); setSes(""); showView("login"); inpNama.value=""; grpHint.innerHTML=""; };
+function showView(v){ $("#loginView").classList.toggle("hide",v!=="login"); $("#appView").classList.toggle("hide",v!=="app"); $("#teacherView").classList.toggle("hide",v!=="teacher") }
+function enterApp(){ showView("app"); showPage("beranda") }
+
+/* ================= NAVIGASI ================= */
+$$(".navitem[data-page]").forEach(b=>b.onclick=()=>showPage(b.dataset.page));
+function showPage(p){ $$(".navitem[data-page]").forEach(b=>b.classList.toggle("on",b.dataset.page===p));
+  $$(".page").forEach(s=>s.classList.add("hide")); $("#pg-"+p).classList.remove("hide");
+  const st=me(); if(st){ st.flags=st.flags||{};
+    if(p==="lab")st.flags.lab=true;
+    dbSave(); }
+  markBadges();
+  if(p==="beranda")renderBeranda();
+  if(p==="kuis")renderKuis();
+  if(p==="peer")renderPeer();
+  if(p==="refleksi")renderRefleksi();
+  refreshNav(); window.scrollTo(0,0); }
+function progress(st){ const s=[];
+  s.push({t:"Baca materi esensial",d:"Pengertian, langkah, contoh, tips",ok:!!st.flags.materi,p:"materi"});
+  s.push({t:"Kunjungi laboratorium gaya belajar",d:"Visual, auditorial, atau kinestetik",ok:!!st.flags.lab,p:"lab"});
+  s.push({t:"Unggah jawaban kuis (2 nomor)",d:"Foto/PDF penyelesaian lengkap",ok:!!(st.kuis[1]&&st.kuis[2]),p:"kuis"});
+  s.push({t:"Kirim penilaian antar teman",d:"Nilai semua teman kelompokmu",ok:!!st.peer,p:"peer"});
+  s.push({t:"Kirim refleksi pembelajaran",d:"Tiga pertanyaan pemantik",ok:!!st.refleksi,p:"refleksi"});
+  return s }
+function refreshNav(){ const st=me(); if(!st)return; const s=progress(st);
+  $("#sideUser").classList.remove("hide");
+  $("#suAva").textContent=st.nama.split(" ").map(w=>w[0]).slice(0,2).join("").toUpperCase();
+  $("#suNama").textContent=st.nama; $("#suGrp").textContent=st.kelompok?("Kelompok "+st.kelompok):"Kelompok belum dipilih";
+  ["materi","lab","kuis","peer","refleksi"].forEach((k,i)=>{ $("#st-"+k).classList.toggle("done",s[i].ok) });
+  $("#st-beranda").classList.add("done");
+  const done=s.filter(x=>x.ok).length, pct=Math.round(done/5*100);
+  const bp=$("#badgeProg"); if(bp)bp.textContent=pct+"% selesai"; }
+function renderBeranda(){ const st=me(); $("#salam").textContent="Halo, "+st.nama.split(" ")[0]+"!";
+  $("#badgeGrp").textContent=st.kelompok?("Kelompok "+st.kelompok):"Kelompok belum dipilih";
+
+  const s=progress(st), done=s.filter(x=>x.ok).length;
+  $("#progBar").style.width=Math.round(done/5*100)+"%";
+  $("#stepsList").innerHTML=s.map((x,i)=>`<div class="step ${x.ok?"done":""}" data-p="${x.p}">
+    <div class="no">${x.ok?"&#10003;":i+1}</div><div><b>${x.t}</b><div class="mut">${x.d}</div></div>
+    <svg class="ic chev"><use href="#i-chev"/></svg></div>`).join("");
+  $$("#stepsList .step").forEach(el=>el.onclick=()=>showPage(el.dataset.p));
+  refreshNav(); }
+
+/* ================= MATERI ================= */
+$("#btnMateriOk").onclick=()=>{ const st=me(); st.flags.materi=true; dbSave(); $("#materiDone").textContent="materi selesai"; toast("Materi ditandai selesai","ok"); showPage("beranda") };
+function markBadges(){ const st=me(); if(!st)return;
+  $("#materiDone").textContent=st.flags.materi?"materi selesai":"belum ditandai";
+  $("#labDone").textContent=st.flags.lab?"lab dikunjungi":"belum dikunjungi";
+  const n=(st.kuis[1]?1:0)+(st.kuis[2]?1:0); $("#kuisDone").textContent=n+"/2 terunggah";
+  $("#peerDone").textContent=st.peer?"terkirim":"belum dikirim"; $("#peerDone").className="badge "+(st.peer?"ok":"");
+  $("#reflDone").textContent=st.refleksi?"terkirim":"belum dikirim"; $("#reflDone").className="badge "+(st.refleksi?"ok":""); }
+
+/* ================= LAB: TABS ================= */
+$$(".tab").forEach(t=>t.onclick=()=>{ $$(".tab").forEach(x=>x.classList.remove("on")); t.classList.add("on");
+  $$(".labpane").forEach(p=>p.classList.remove("on")); $("#lab-"+t.dataset.lab).classList.add("on");
+  const st=me(); if(st){st.flags.lab=true; dbSave()} markBadges(); refreshNav(); });
+
+/* ---- Auditorial: text-to-speech ---- */
+let speaking=false;
+function stopSpeak(){ if("speechSynthesis" in window) speechSynthesis.cancel(); speaking=false; const b=$("#btnSpeak"); if(b)b.innerHTML='<svg class="ic fill"><use href="#i-play"/></svg>'; }
+$("#btnSpeak").onclick=()=>{ if(!("speechSynthesis" in window)){toast("Peramban ini tidak mendukung audio","err");return}
+  if(speaking){stopSpeak(); $("#speakStat").textContent="Audio dihentikan."; return}
+  const u=new SpeechSynthesisUtterance($("#naskah").textContent);
+  u.lang="id-ID"; const v=speechSynthesis.getVoices().find(v=>/^id/i.test(v.lang)); if(v)u.voice=v; u.rate=.95;
+  u.onend=()=>{stopSpeak(); $("#speakStat").textContent="Narasi selesai. Ulangi bila perlu."};
+  u.onerror=()=>{stopSpeak(); $("#speakStat").textContent="Audio tidak dapat diputar di pratinjau ini. Unduh file HTML dan buka di peramban untuk mendengarkan."};
+  speechSynthesis.cancel(); speechSynthesis.speak(u); speaking=true;
+  $("#btnSpeak").innerHTML='<svg class="ic fill"><use href="#i-stop"/></svg>'; $("#speakStat").textContent="Sedang memutar narasi materi..."; };
+
+/* ---- Kinestetik: grafik interaktif ---- */
+const B0=-2,B1=10.5, PX=x=>40+(x-B0)/(B1-B0)*560, PY=y=>580-(y-B0)/(B1-B0)*560;
+const HALVES={
+ 1:{pts:[[-2,-2],[10.5,-2],[10.5,-0.25],[-2,6]],c:"#0e7490"},
+ 2:{pts:[[-2,-2],[5,-2],[-1.25,10.5],[-2,10.5]],c:"#f59e0b"},
+ 3:{pts:[[0,-2],[10.5,-2],[10.5,10.5],[0,10.5]],c:"#64748b"},
+ 4:{pts:[[-2,0],[10.5,0],[10.5,10.5],[-2,10.5]],c:"#94a3b8"}};
+const DP=[[0,0],[4,0],[2,4],[0,5]];
+const TESTS=[
+ {t:"x + 2y &le; 10",f:p=>p.x+2*p.y,v:p=>p.x+2*p.y,lim:10,ok:r=>r<=10},
+ {t:"2x + y &le; 8",f:p=>2*p.x+p.y,v:p=>2*p.x+p.y,lim:8,ok:r=>r<=8},
+ {t:"x &ge; 0",f:p=>p.x,v:p=>p.x,lim:0,ok:r=>r>=0},
+ {t:"y &ge; 0",f:p=>p.y,v:p=>p.y,lim:0,ok:r=>r>=0}];
+function inDP(p){return TESTS.every(t=>t.ok(t.v(p)))}
+let P={x:7,y:7}, tantangan=false;
+(function initLab(){
+  const g=$("#gHalves"); g.innerHTML=Object.entries(HALVES).map(([k,h])=>`<polygon id="hp${k}" points="${h.pts.map(p=>PX(p[0])+","+PY(p[1])).join(" ")}" fill="${h.c}" opacity=".16"></polygon>`).join("");
+  let grid=""; for(let i=0;i<=10;i+=2){ grid+=`<line x1="${PX(i)}" y1="${PY(B0)}" x2="${PX(i)}" y2="${PY(B1)}"/><line x1="${PX(B0)}" y1="${PY(i)}" x2="${PX(B1)}" y2="${PY(i)}"/>` } $("#gGrid").innerHTML=grid;
+  const at=(id,o)=>{const e=$(id);for(const k in o)e.setAttribute(k,o[k])};
+  at("#axX",{x1:PX(B0),y1:PY(0),x2:PX(B1),y2:PY(0)});
+  at("#axY",{x1:PX(0),y1:PY(B0),x2:PX(0),y2:PY(B1)});
+  at("#axLX",{x:PX(B1)+6,y:PY(0)+4}); at("#axLY",{x:PX(0)-6,y:PY(B1)-8});
+  at("#tk0",{x:PX(0)-16,y:PY(0)+18}); at("#tk4x",{x:PX(4)-4,y:PY(0)+18}); at("#tk8x",{x:PX(8)-4,y:PY(0)+18});
+  at("#tk4y",{x:PX(0)-26,y:PY(4)+4}); at("#tk8y",{x:PX(0)-26,y:PY(8)+4});
+  const set=(id,x1,y1,x2,y2)=>{const l=$(id);l.setAttribute("x1",PX(x1));l.setAttribute("y1",PY(y1));l.setAttribute("x2",PX(x2));l.setAttribute("y2",PY(y2))};
+  set("#line1",-2,6,10.5,-0.25); set("#line2",-1.25,10.5,5,-2);
+  $("#lbl1").setAttribute("x",PX(6.6));$("#lbl1").setAttribute("y",PY(1.4));
+  $("#lbl2").setAttribute("x",PX(0.35));$("#lbl2").setAttribute("y",PY(7.1));
+  $("#dpLbl").setAttribute("x",PX(0.5));$("#dpLbl").setAttribute("y",PY(1.5));
+  $("#dpPoly").setAttribute("points",DP.map(p=>PX(p[0])+","+PY(p[1])).join(" "));
+  [1,2,3,4].forEach(k=>$("#tg"+k).onchange=()=>{ $("#hp"+k).style.display=$("#tg"+k).checked?"":"none";
+    $("#dpPoly").style.opacity=[1,2,3,4].every(i=>$("#tg"+i).checked)?.30:.08; updateEval(); });
+  const svg=$("#labSvg"), gp=$("#gPoint");
+  function move(ev){ const pt=svg.createSVGPoint(); pt.x=ev.clientX; pt.y=ev.clientY;
+    const m=svg.getScreenCTM(); if(!m)return; const q=pt.matrixTransform(m.inverse());
+    let x=B0+(q.x-40)/560*(B1-B0), y=B0+(580-q.y)/560*(B1-B0);
+    P.x=Math.max(B0,Math.min(B1,Math.round(x*10)/10)); P.y=Math.max(B0,Math.min(B1,Math.round(y*10)/10)); updateEval(); }
+  gp.addEventListener("pointerdown",ev=>{gp.setPointerCapture(ev.pointerId);gp.style.cursor="grabbing";move(ev)});
+  gp.addEventListener("pointermove",ev=>{if(gp.hasPointerCapture(ev.pointerId))move(ev)});
+  gp.addEventListener("pointerup",ev=>{gp.style.cursor="grab";gp.releasePointerCapture(ev.pointerId)});
+  $("#btnResetP").onclick=()=>{ P={x:+(Math.random()*12-1.5).toFixed(1), y:+(Math.random()*12-1.5).toFixed(1)}; tantangan=false; updateEval() };
+  $("#btnTantang").onclick=()=>{ tantangan=true; P={x:9,y:9}; updateEval(); toast("Seret titik P ke dalam daerah penyelesaian biru!") };
+  updateEval();
+})();
+function updateEval(){ const g=$("#gPoint");
+  g.setAttribute("transform",`translate(${PX(P.x)},${PY(P.y)})`);
+  $("#pTxt").textContent=`P(${P.x}, ${P.y})`; $("#pTxt").setAttribute("x",14); $("#pTxt").setAttribute("y",-12);
+  $("#evalList").innerHTML=TESTS.map(t=>{ const r=Math.round(t.v(P)*10)/10, o=t.ok(r);
+    return `<div class="evalrow"><span>${t.t} &rarr; ${r} ${t.t.includes("&le;")?"&le;":"&ge;"} ${t.lim} ?</span><span class="vv ${o?"t":"f"}">${o?"BENAR":"SALAH"}</span></div>` }).join("");
+  const ok=inDP(P), v=$("#verdict");
+  v.className="verdict "+(ok?"in":"out");
+  v.textContent=ok?"Titik P BERADA di daerah penyelesaian":"Titik P di luar daerah penyelesaian";
+  if(ok&&tantangan){ tantangan=false; toast("Tantangan selesai! P berada di daerah penyelesaian","ok"); } }
+
+/* ================= KUIS ================= */
+function renderKuis(){ markBadges(); [1,2].forEach(n=>{ const st=me(), f=st.kuis[n];
+  $("#stat"+n).innerHTML=f?`<div class="filestat"><svg class="ic" style="width:17px;height:17px"><use href="#i-file"/></svg><span>${esc(f.name)} <span class="mut small">(${Math.round(f.size/1024)} KB, ${fmtT(f.ts)})</span></span><span class="spacer"></span>
+   <a class="chip" href="${f.data}" download="${esc(f.name)}">Unduh</a>
+   <button class="chip none" data-del="${n}">Hapus</button></div>`:""; });
+  $$("#pg-kuis [data-del]").forEach(b=>b.onclick=()=>{ const st=me(); delete st.kuis[+b.dataset.del]; dbSave(); renderKuis(); refreshNav(); }); }
+async function processFile(file){
+  if(file.type.startsWith("image/")){
+    const dataUrl=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file)});
+    const img=await new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=dataUrl});
+    let w=img.width,h=img.height; const MAX=1400;
+    if(Math.max(w,h)>MAX){const s=MAX/Math.max(w,h);w=Math.round(w*s);h=Math.round(h*s)}
+    const c=document.createElement("canvas");c.width=w;c.height=h;c.getContext("2d").drawImage(img,0,0,w,h);
+    let out=c.toDataURL("image/jpeg",.82); let type="image/jpeg", name=file.name.replace(/\.[^.]+$/,"")+".jpg";
+    if(out.length>=dataUrl.length&&file.type==="image/png"){out=dataUrl;type="image/png";name=file.name}
+    return {name,type,data:out,size:Math.round(out.length*.75)};
+  }
+  if(file.type==="application/pdf"){
+    if(file.size>2600000) throw new Error("PDF maksimal 2,5 MB.");
+    const data=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file)});
+    return {name:file.name,type:file.type,data,size:file.size};
+  }
+  throw new Error("Format tidak didukung. Unggah foto JPG/PNG atau PDF.");
+}
+[1,2].forEach(n=>{ const uz=$("#uz"+n), inp=$("#file"+n);
+  uz.onclick=e=>{if(e.target!==inp)inp.click()};
+  inp.onchange=async()=>{ const f=inp.files[0]; if(!f)return;
+    try{ const pr=await processFile(f); const st=me(); st.kuis[n]={...pr,ts:Date.now()};
+      if(!dbSave()){ delete st.kuis[n]; toast("Penyimpanan perangkat penuh. Hapus berkas lama atau gunakan sinkronisasi online.","err"); return }
+      syncPush({nama:st.nama,kelompok:st.kelompok,jenis:"kuis",ket:"Soal "+n+" ("+pr.name+")",ts:Date.now(),file:{name:pr.name,type:pr.type,base64:pr.data.split(",")[1]}});
+      toast("Jawaban nomor "+n+" tersimpan","ok"); renderKuis(); refreshNav();
+    }catch(err){ toast(err.message||"Gagal membaca berkas","err") }
+    inp.value=""; }; });
+
+/* ================= PEER REVIEW ================= */
+function peerTargets(st){ const g=ROSTER[(st.kelompok||0)-1]; if(!g)return [];
+  const self=norm(st.nama); let list=g.anggota.filter(a=>norm(a)!==self);
+  if(!list.length) list=g.anggota.slice(); return list }
+function renderPeer(){ markBadges(); const st=me(); const list=peerTargets(st);
+  if(!list.length){ $("#peerList").innerHTML=`<div class="card"><p class="small mut">Kelompokmu belum terdeteksi. Hubungi guru untuk memperbarui data kelompok.</p></div>`; return }
+  const saved={}; (st.peer?st.peer.items:[]).forEach(it=>saved[norm(it.target)]=it);
+  $("#peerList").innerHTML=list.map((a,i)=>{ const sv=saved[norm(a)]||{};
+    return `<div class="card pcard"><div class="phead"><div class="ava">${esc(a.split(" ").map(w=>w[0]).slice(0,2).join(""))}</div>
+      <div><b style="font-size:15px">${esc(a)}</b><div class="small mut">Teman sekelompokmu</div></div></div>
+      ${CRIT.map((c,ci)=>`<div class="crit"><span>${c}</span>
+        <select data-t="${norm(a)}" data-c="${ci}">
+          <option value="">Pilih skor</option>${[1,2,3,4].map(v=>`<option value="${v}" ${sv.s&&sv.s[ci]==v?"selected":""}>${v} - ${["Kurang","Cukup","Baik","Sangat Baik"][v-1]}</option>`).join("")}
+        </select></div>`).join("")}
+      <label class="f">Catatan / saran untuk teman ini (opsional)</label>
+      <textarea data-tn="${norm(a)}" class="small" placeholder="Tuliskan catatan singkat...">${esc(sv.cat||"")}</textarea></div>` }).join("");
+  $("#peerNote").textContent=st.peer?("Terkirim "+fmtT(st.peer.ts)+". Kamu masih dapat memperbarui penilaian."):"Lengkapi semua kriteria terlebih dahulu.";
+  $("#btnPeerKirim").onclick=()=>{ const items=[]; let ok=true;
+    list.forEach(a=>{ const t=norm(a); const sels=$$(`#peerList select[data-t="${t}"]`).map(s=>+s.value);
+      if(sels.some(v=>!v)) ok=false;
+      items.push({target:a,s:sels,cat:($(`#peerList textarea[data-tn="${t}"]`)||{}).value||""}); });
+    if(!ok){toast("Masih ada kriteria yang belum diberi skor","err");return}
+    st.peer={ts:Date.now(),items}; dbSave();
+    syncPush({nama:st.nama,kelompok:st.kelompok,jenis:"peer_review",ket:items.map(i=>i.target+" ["+i.s.join(",")+"]").join("; "),ts:Date.now()});
+    toast("Penilaian antar teman terkirim","ok"); renderPeer(); refreshNav(); }; }
+
+/* ================= REFLEKSI ================= */
+function renderRefleksi(){ markBadges(); const st=me();
+  if(st.refleksi){ ["refl1","refl2","refl3"].forEach((id,i)=>$("#"+id).value=st.refleksi.j[i]||"");
+    $("#reflNote").textContent="Terkirim "+fmtT(st.refleksi.ts)+". Kamu masih dapat memperbarui jawaban."; }
+  $("#btnReflKirim").onclick=()=>{ const j=[$("#refl1").value.trim(),$("#refl2").value.trim(),$("#refl3").value.trim()];
+    if(j.some(x=>x.length<3)){toast("Lengkapi ketiga pertanyaan refleksi","err");return}
+    st.refleksi={ts:Date.now(),j}; dbSave();
+    syncPush({nama:st.nama,kelompok:st.kelompok,jenis:"refleksi",ket:j[0].slice(0,80)+"...",ts:Date.now(),jawaban:j});
+    toast("Refleksi terkirim. Terima kasih!","ok"); renderRefleksi(); refreshNav(); }; }
+
+/* ================= DASHBOARD GURU ================= */
+function askPass(){ openModal("Masuk Dashboard Guru",
+  `<label class="f">Kata sandi</label><input type="password" id="inpPassGate" placeholder="Kata sandi guru">
+   <p class="small mut" style="margin-top:10px">Kata sandi awal: <b>guru123</b> (dapat diganti di menu Pengaturan).</p>`,
+  `<button class="btn btn-ghost btn-sm" onclick="closeModal()">Batal</button><button class="btn btn-pri btn-sm" id="btnGateOk">Masuk</button>`);
+  $("#btnGateOk").onclick=()=>{ if($("#inpPassGate").value===DB.settings.pass){closeModal();openTeacher()} else toast("Kata sandi salah","err") };
+  $("#inpPassGate").focus(); }
+function openTeacher(){ showView("teacher"); renderTeacher(); }
+$("#btnTBack").onclick=()=>{ showView(me()?"app":"login"); if(me())showPage("beranda") };
+function allStudents(){ const arr=Object.values(DB.students);
+  arr.sort((a,b)=>(a.kelompok||99)-(b.kelompok||99)||a.nama.localeCompare(b.nama)); return arr }
+function recvAvg(nama){ let sum=0,cnt=0; const t=norm(nama);
+  allStudents().forEach(s=>(s.peer?s.peer.items:[]).forEach(it=>{ if(norm(it.target)===t&&it.s&&it.s.length){ it.s.forEach(v=>{if(v){sum+=v;cnt++}}) } }));
+  return cnt? (sum/cnt).toFixed(2): null }
+function renderTeacher(){ const sts=allStudents();
+  const q=sts.filter(s=>s.kuis[1]||s.kuis[2]).length, p=sts.filter(s=>s.peer).length, r=sts.filter(s=>s.refleksi).length;
+  const TOT=ROSTER.reduce((a,g)=>a+g.anggota.length,0);
+  const SIC=(g,ic)=>`<span class="sic" style="--g:${g}"><svg class="ic"><use href="#${ic}"/></svg></span>`;
+  $("#tStats").innerHTML=`<div class="stat">${SIC("linear-gradient(135deg,#3b5bfd,#06b6d4)","i-users")}<b>${sts.length}</b><span class="lb">Siswa aktif (dari ${TOT} terdaftar)</span></div>
+   <div class="stat">${SIC("linear-gradient(135deg,#f59e0b,#f97316)","i-file")}<b>${q}</b><span class="lb">Mengunggah jawaban kuis</span></div>
+   <div class="stat">${SIC("linear-gradient(135deg,#8b5cf6,#6366f1)","i-users")}<b>${p}</b><span class="lb">Mengirim penilaian teman</span></div>
+   <div class="stat">${SIC("linear-gradient(135deg,#16a34a,#22c55e)","i-refl")}<b>${r}</b><span class="lb">Mengirim refleksi</span></div>`;
+  $("#tTable").innerHTML=`<thead><tr><th>No</th><th>Nama</th><th>Kel.</th><th>Berkas Kuis</th><th>Peer</th><th>Skor Diterima</th><th>Refleksi</th><th>Aktivitas</th><th></th></tr></thead><tbody>`+
+   (sts.length?sts.map((s,i)=>`<tr><td>${i+1}</td><td><b>${esc(s.nama)}</b></td><td>${s.kelompok||"-"}</td>
+    <td>${[1,2].map(n=>s.kuis[n]?`<a class="chip" href="${s.kuis[n].data}" download="${esc(s.kuis[n].name)}">Soal ${n}</a>`:`<span class="chip none">Soal ${n}</span>`).join("")}</td>
+    <td>${s.peer?'<span class="badge ok">ya</span>':'<span class="chip none">belum</span>'}</td>
+    <td>${recvAvg(s.nama)??"-"}</td>
+    <td>${s.refleksi?'<span class="badge ok">ya</span>':'<span class="chip none">belum</span>'}</td>
+    <td class="small mut">${fmtT(s.ts)}</td>
+    <td><button class="chip" data-det="${esc(s.nama)}">Detail</button></td></tr>`).join("")
+   :`<tr><td colspan="9" style="text-align:center;padding:26px" class="mut">Belum ada data siswa pada perangkat ini.</td></tr>`)+`</tbody>`;
+  $$("#tTable [data-det]").forEach(b=>b.onclick=()=>detailSiswa(b.dataset.det));
+  $("#inpPass").value=DB.settings.pass; $("#inpSync").value=DB.settings.sync||""; }
+function detailSiswa(nama){ const st=DB.students[norm(nama)]; if(!st)return;
+  const ra=recvAvg(nama); let rec="";
+  allStudents().forEach(s=>(s.peer?s.peer.items:[]).forEach(it=>{ if(norm(it.target)===norm(nama))
+    rec+=`<div class="evalrow"><span>${esc(s.nama)} &rarr; skor ${it.s.join(", ")}</span><span class="vv t">${(it.s.reduce((a,b)=>a+(+b||0),0)/4).toFixed(2)}</span></div>` }));
+  openModal("Detail: "+st.nama,
+   `<div class="kv"><b>Kelompok</b><span>${st.kelompok?("Kelompok "+st.kelompok):"-"}</span>
+    <b>Berkas kuis</b><span>${[1,2].map(n=>st.kuis[n]?`<a class="chip" href="${st.kuis[n].data}" download="${esc(st.kuis[n].name)}">Soal ${n}: ${esc(st.kuis[n].name)}</a>`:"").join(" ")||"-"}</span></div>
+    <div class="sect">Jawaban refleksi</div>
+    ${st.refleksi?["Apa yang telah dipahami","Materi yang belum dikuasai","Perasaan setelah pembelajaran"].map((q,i)=>`<p class="small" style="margin-bottom:8px"><b>${i+1}. ${q}:</b><br>${esc(st.refleksi.j[i])||"<i class='mut'>(kosong)</i>"}</p>`).join(""):'<p class="small mut">Belum mengisi refleksi.</p>'}
+    <div class="sect">Penilaian yang diberikan</div>
+    ${st.peer?st.peer.items.map(it=>`<p class="small" style="margin-bottom:6px"><b>${esc(it.target)}</b> &rarr; ${it.s.join(", ")} ${it.cat?`<span class="mut">| catatan: ${esc(it.cat)}</span>`:""}</p>`).join(""):'<p class="small mut">Belum mengirim penilaian.</p>'}
+    <div class="sect">Penilaian yang diterima (rata-rata ${ra??"-"})</div>
+    ${rec||'<p class="small mut">Belum ada teman yang menilai.</p>'}`,
+   `<button class="btn btn-ghost btn-sm" onclick="closeModal()">Tutup</button>`); }
+/* ---- ekspor ---- */
+$("#btnCsv").onclick=()=>{ const sts=allStudents();
+  const head=["Nama","Kelompok","Berkas Soal 1","Berkas Soal 2","Peer Review","Rata-rata Diterima","Refleksi 1","Refleksi 2","Refleksi 3","Aktivitas Terakhir"];
+  const q=v=>`"${String(v??"").replace(/"/g,'""')}"`;
+  const rows=sts.map(s=>[s.nama,s.kelompok||"",s.kuis[1]?s.kuis[1].name:"",s.kuis[2]?s.kuis[2].name:"",s.peer?"ya":"belum",recvAvg(s.nama)||"",s.refleksi?s.refleksi.j[0]:"",s.refleksi?s.refleksi.j[1]:"",s.refleksi?s.refleksi.j[2]:"",fmtT(s.ts)].map(q).join(";"));
+  dl(new Blob(["\uFEFF"+[head.map(q).join(";"),...rows].join("\r\n")],{type:"text/csv;charset=utf-8"}),"Rekap_SPtLDV_"+new Date().toISOString().slice(0,10)+".csv");
+  toast("Rekap CSV diunduh","ok"); };
+$("#btnJson").onclick=()=>{ dl(new Blob([JSON.stringify(DB,null,2)],{type:"application/json"}),"Cadangan_SPtLDV.json"); toast("Cadangan JSON diunduh","ok") };
+$("#btnZip").onclick=()=>{ const files=[];
+  allStudents().forEach(s=>[1,2].forEach(n=>{ const f=s.kuis[n]; if(!f)return;
+    const ext=(f.name.split(".").pop()||"bin").toLowerCase();
+    const nm=`K${s.kelompok||"X"}_${norm(s.nama).slice(0,24)}_soal${n}.${ext}`;
+    files.push({name:nm,data:b64u8(f.data.split(",")[1])}); }));
+  if(!files.length){toast("Belum ada berkas jawaban","err");return}
+  dl(new Blob([zipStore(files)],{type:"application/zip"}),"Jawaban_SPtLDV.zip"); toast("ZIP berisi "+files.length+" berkas diunduh","ok"); };
+$("#btnWipe").onclick=()=>{ if(confirm("Hapus SELURUH data siswa pada perangkat ini? Tindakan tidak dapat dibatalkan.")){ DB={students:{},settings:DB.settings}; dbSave(); renderTeacher(); toast("Semua data siswa dihapus","ok") } };
+$("#btnPass").onclick=()=>{ const v=$("#inpPass").value.trim(); if(v.length<4){toast("Kata sandi minimal 4 karakter","err");return} DB.settings.pass=v; dbSave(); toast("Kata sandi diperbarui","ok") };
+$("#btnSync").onclick=()=>{ DB.settings.sync=$("#inpSync").value.trim(); window.SYNC_URL=DB.settings.sync; dbSave(); toast(DB.settings.sync?"Sinkronisasi aktif pada perangkat ini":"Sinkronisasi dimatikan","ok") };
+$("#btnCopySiswa").onclick=()=>{ const url=(DB.settings.sync||"").trim();
+  if(!url){toast("Isi dan simpan URL sinkronisasi terlebih dahulu","err");return}
+  const clone=document.documentElement.cloneNode(true);
+  const sc=clone.querySelector("#syncconf"); if(sc) sc.textContent='window.SYNC_URL='+JSON.stringify(url)+';';
+  clone.querySelectorAll("#modal,#toast").forEach(e=>e.classList.add("hide"));
+  dl(new Blob(["<!DOCTYPE html>\n"+clone.outerHTML],{type:"text/html"}),"SPtLDV_versi_siswa.html");
+  toast("File versi siswa diunduh; bagikan file ini ke siswa","ok"); };
+
+/* ================= ZIP (store) + CRC32 ================= */
+/*ZIP-START*/
+function crc32(u8){let c,t=[];for(let n=0;n<256;n++){c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c}
+ let r=0xFFFFFFFF;for(let i=0;i<u8.length;i++)r=t[(r^u8[i])&0xFF]^(r>>>8);return (r^0xFFFFFFFF)>>>0}
+function b64u8(b){const s=atob(b);const u=new Uint8Array(s.length);for(let i=0;i<s.length;i++)u[i]=s.charCodeAt(i);return u}
+function zipStore(files){const enc=new TextEncoder(),chunks=[],central=[];let off=0;
+ const d=new Date(),dt=(((d.getFullYear()-1980)<<9)|((d.getMonth()+1)<<5)|d.getDate())&0xFFFF,tm=((d.getHours()<<11)|(d.getMinutes()<<5)|(d.getSeconds()>>1))&0xFFFF;
+ for(const f of files){const nb=enc.encode(f.name),crc=crc32(f.data),sz=f.data.length;
+  const lh=new DataView(new ArrayBuffer(30));
+  lh.setUint32(0,0x04034b50,true);lh.setUint16(4,20,true);lh.setUint16(6,0,true);lh.setUint16(8,0,true);
+  lh.setUint16(10,tm,true);lh.setUint16(12,dt,true);lh.setUint32(14,crc,true);lh.setUint32(18,sz,true);lh.setUint32(22,sz,true);
+  lh.setUint16(26,nb.length,true);lh.setUint16(28,0,true);
+  chunks.push(new Uint8Array(lh.buffer),nb,f.data);
+  const ch=new DataView(new ArrayBuffer(46));
+  ch.setUint32(0,0x02014b50,true);ch.setUint16(4,20,true);ch.setUint16(6,20,true);ch.setUint16(8,0,true);ch.setUint16(10,0,true);
+  ch.setUint16(12,tm,true);ch.setUint16(14,dt,true);ch.setUint32(16,crc,true);ch.setUint32(20,sz,true);ch.setUint32(24,sz,true);
+  ch.setUint16(28,nb.length,true);ch.setUint16(30,0,true);ch.setUint16(32,0,true);ch.setUint16(34,0,true);ch.setUint16(36,0,true);
+  ch.setUint32(38,0,true);ch.setUint32(42,off,true);
+  central.push(new Uint8Array(ch.buffer),nb);
+  off+=30+nb.length+sz;}
+ const cd=central.reduce((a,b)=>a+b.length,0);
+ const eo=new DataView(new ArrayBuffer(22));
+ eo.setUint32(0,0x06054b50,true);eo.setUint16(8,files.length,true);eo.setUint16(10,files.length,true);
+ eo.setUint32(12,cd,true);eo.setUint32(16,off,true);
+ const all=[...chunks,...central,new Uint8Array(eo.buffer)];
+ const tot=all.reduce((a,b)=>a+b.length,0),out=new Uint8Array(tot);let p=0;
+ for(const a of all){out.set(a,p);p+=a.length}return out}
+/*ZIP-END*/
+
+/* ================= INIT ================= */
+(function init(){ if(SES&&DB.students[SES]) enterApp(); else showView("login"); markBadges(); })();
+</script>
+</body>
+</html>
